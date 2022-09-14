@@ -24,7 +24,7 @@ public class userService {
     }
 
     public List<User> findName(String name){
-        return userepository.findUsersByHisName(name);
+        return userepository.findByNameContaining(name);
     }
 
     public User AddUser(User newUser){

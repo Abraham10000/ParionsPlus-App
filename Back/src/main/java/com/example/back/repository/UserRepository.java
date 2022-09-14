@@ -10,4 +10,8 @@ import java.util.List;
 public interface UserRepository extends JpaRepository <User, Integer> {
     @Query(value = "select * from users where name ilike %:nametofind%",nativeQuery = true)
     List<User> findUsersByHisName(@Param("nametofind") String name);
+
+
+    List<User> findByNameContaining(String name);
+
 }

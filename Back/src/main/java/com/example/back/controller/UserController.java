@@ -25,8 +25,8 @@ public class UserController {
         return userservice.getById(userid);
     }
 
-    @GetMapping("/users?name=[nameToFind]")
-    public List<User> getByName(@RequestParam String character){ return  userservice.findName(character);}
+    @GetMapping("/users/{value}")
+    public List<User> getByName(@RequestParam String value){ return  userservice.findName(value);}
 
     @PostMapping("/users")
     public User AddUser(@RequestBody User userToAdd){ return  userservice.AddUser(userToAdd);}

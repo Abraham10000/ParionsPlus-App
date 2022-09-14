@@ -22,13 +22,13 @@ public class GameController {
         return gameService.getGameDay();
     }
 
-    @GetMapping("/game/sorted")
+    @GetMapping("/games/sorted")
     public List<Game> getGameSortde(){
         return gameService.sortGameByDate();
     }
 
-    @GetMapping("/games?compet_name=[competToFind]")
-    public List<Game> getGameByCompetName(@RequestParam String competToFind){
+    @GetMapping("/games/{competname}")
+    public List<Game> getGameByCompetName(@PathVariable String competToFind){
         return gameService.findGameByCompetName(competToFind);
     }
 
