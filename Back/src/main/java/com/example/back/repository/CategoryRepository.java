@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Category , Integer> {
 
-    @Query(value = "select * from category ordery by category_name asc",nativeQuery = true)
+    @Query(value = "select * from category order by category_name asc",nativeQuery = true)
     List<Category> findAll();
 }

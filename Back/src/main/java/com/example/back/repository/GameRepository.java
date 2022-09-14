@@ -12,10 +12,10 @@ public interface GameRepository extends JpaRepository <Game, Integer> {
     @Query(value = "select * from game_list order by broadcast_day asc" , nativeQuery = true)
     List<Game> sortGameByDate();
 
-    @Query(value = "select * from game_list where broadcast_day = current_date and order by broadcast_time asc", nativeQuery = true)
+    @Query(value = "select * from game_list where broadcast_day = current_date order by broadcast_time asc", nativeQuery = true)
     List<Game> getGameDay();
 
-    @Query(value = "select * from game left join competition where competition.id_compet = game;id_competition and compet_name = :compet_given"
+    @Query(value = "select * from game_list inner join competition on game_list.id_competition = competition.id_competition where compet_name = :compet_given"
             ,nativeQuery = true)
     List<Game> getGamByCompetitionName(@Param("compet_given") String compet_toFind);
 }

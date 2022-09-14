@@ -24,18 +24,18 @@ public class Game implements Serializable {
     private Integer id_game;
 
     @OneToOne
-    @JoinColumn(name = "id_compet", nullable = false,referencedColumnName = "id_competition")
+    @JoinColumn(name = "id_competition", nullable = false,referencedColumnName = "id_competition")
     private Competition id_competition;
 
     @OneToOne
-    @JoinColumn(name = "id_team_home",nullable = false,referencedColumnName = "id_team")
+    @JoinColumn(name = "id_team_home",nullable = false)
     private Team team_home;
 
     @Column(name = "team_home_rating",nullable = false)
     private Float team_home_rating;
 
     @OneToOne
-    @JoinColumn(name = "id_team_away",nullable = false,referencedColumnName = "id_team")
+    @JoinColumn(name = "id_team_away",nullable = false)
     private Team team_away;
 
     @Column(name = "team_away_rating",nullable = false)

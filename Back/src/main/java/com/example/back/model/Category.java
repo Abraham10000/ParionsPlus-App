@@ -22,8 +22,5 @@ public class Category implements Serializable {
 
     @Column(name = "category_name")
     private String category_name;
-
-    @Column(name = "country",nullable = false)
-    private String country;
 }
 //Repeated column in mapping for entity

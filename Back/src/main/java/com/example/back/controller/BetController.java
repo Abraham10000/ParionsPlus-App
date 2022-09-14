@@ -33,7 +33,7 @@ public class BetController {
         return betService.saveBet(newBet);
     }
 
-    @DeleteMapping("/bet")
+    @DeleteMapping("/bet/id")
     public String deleteBet(@PathVariable Integer idBet){
         return betService.deleteBet(idBet);
     }

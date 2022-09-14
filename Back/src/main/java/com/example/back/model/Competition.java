@@ -20,7 +20,7 @@ public class Competition implements Serializable {
     @Id
     @Column(name = "id_competition",nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id_compet;
+    private Integer id_competition;
 
     @Column(name = "compet_name")
     private String compet_name;
