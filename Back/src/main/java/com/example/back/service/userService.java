@@ -31,10 +31,6 @@ public class userService implements UserDetailsService {
         return userepository.findByNameContaining(name);
     }
 
-    public User AddUser(User newUser){
-        return userepository.save(newUser);
-    }
-
     public User UpdateUser(Long id ,String name){
         Optional<User> user = userepository.findById(id);
         if(user.isPresent()){
@@ -59,5 +55,15 @@ public class userService implements UserDetailsService {
     public User addUser(User user){
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         return userepository.save(user);
+    }
+
+    public User UpdateAllUserInfo(Long id , User Newuser){
+        Optional<User> userOptional = userepository.findById(id);
+        if(Newuser.isPresent()){
+            Newuser.setId_user(id);
+            return userepository.save(Newuser);
+        } else {
+            throw new NullPointerException("User not found");
+        }
     }
 }
