@@ -1,31 +1,3 @@
- id_user | name |  last_nameame   | phone_number  | user_name
----------+-----------+---------+---------------+-----------
-       1 | Prince    | Abraham | +261348290618 | Abybgbe69
-
-insert into users(id_user,name,last_name,phone_number,user_name,password,fk_role_id) values
-(1,'Abraham','Prince','+261345678934','BgDeMada','abraham',1);
-
-insert into users(id_user,name,last_name,phone_number,user_name,password,fk_role_id) values
-(2,'Fanjasoa','Soa','+261345678901','Fanjasoa ratsy Kely','fanjasoa',2);
-
-insert into users(id_user,name,last_name,phone_number,user_name,password,fk_role_id) values
-(3,'Fanjasoa','SoaMariaka','+261335678901','PesudoTikoBe','soa',2);
-
-insert into users(id_user,name,last_name,phone_number,user_name,password,fk_role_id) values
-(4,'Raheriniriana','Valisoa','+261345378903','Akiziko','valisoa',2);
-
-insert into users(id_user,name,last_name,phone_number,user_name,password,fk_role_id) values
-(5,'Ramaro','Sandy','+261325688904','BigUp','sandy',2);
-
-insert into users(id_user,name,last_name,phone_number,user_name,password,fk_role_id) values
-(6,'Rakoto','Ndratianona','+261330532415','MiVida','neninay',2);
-
-insert into users(id_user,name,last_name,phone_number,user_name,password,fk_role_id) values
-(7,'RAMAROSANDY','Assael','+261344678901','Bota','assael',2);
-
-insert into users(id_user,name,last_name,phone_number,user_name,password,fk_role_id) values
-(8,'Aaron','Princy','+261345678934','RaBobo','princy',2);
-
 
 
  role_id | role_name
