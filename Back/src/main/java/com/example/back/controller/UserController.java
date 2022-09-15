@@ -45,6 +45,11 @@ public class UserController {
         return userservice.UpdateUser(id_user, newname);
     }
 
+    @PutMapping("user/{id}")
+    public User UpdateAllUserInformation(@PathVariable Long id_user , @RequestBody User userToadd){
+        return userservice.UpdateAllUserInfo(id_user, userToadd);
+    }
+
     @DeleteMapping("/user/{id}")
     public String DeleteUser(@PathVariable Long id_user){
         return  userservice.DeleteUserById(id_user);
