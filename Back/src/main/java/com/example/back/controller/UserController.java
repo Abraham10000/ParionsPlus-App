@@ -4,6 +4,8 @@ package com.example.back.controller;
 import com.example.back.model.User;
 import com.example.back.service.userService;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,33 +13,40 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
+@Controller
+@Data
 public class UserController {
 
     private final userService userservice;
+
+    @GetMapping("/")
+    public String helloApi(){
+        return "Hello World it's work";
+    }
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
         return userservice.getALl();
     }
 
-    @GetMapping("/users/{userid}")
-    public Optional<User> getUserById(@RequestParam Integer userid){
-        return userservice.getById(userid);
+    @GetMapping("/users/{id}")
+    public User getUserById(@PathVariable Long id){
+        return userservice.getById(id);
     }
 
-    @GetMapping("/users/{value}")
-    public List<User> getByName(@RequestParam String value){ return  userservice.findName(value);}
+    @GetMapping("/users/{name}")
+    public List<User> getByName(@PathVariable String value){ return  userservice.findName(value);}
 
-    @PostMapping("/users")
-    public User AddUser(@RequestBody User userToAdd){ return  userservice.AddUser(userToAdd);}
+    @PostMapping("/user")
+    public User AddUser(@RequestBody User userToAdd){ return  userservice.addUser(userToAdd);}
 
-    @PatchMapping("/users/{id}")
-    public User updateUserName(@PathVariable Integer id_user,@RequestBody String newname){
+    @PatchMapping("/user/{id}")
+    public User updateUserName(@PathVariable Long id_user,@RequestBody String newname){
         return userservice.UpdateUser(id_user, newname);
     }
 
-    @DeleteMapping("/users/{id}")
-    public String DeleUser(@PathVariable Integer id_user){
+    @DeleteMapping("/user/{id}")
+    public String DeleteUser(@PathVariable Long id_user){
         return  userservice.DeleteUserById(id_user);
     }
 }

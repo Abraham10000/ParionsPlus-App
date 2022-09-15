@@ -1,20 +1,22 @@
 package com.example.back.security;
 
+import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 public class SecurityConf extends WebSecurityConfigurerAdapter {
+    private final com.example.back.service.userService userService;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -46,24 +48,21 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable();
     }
-    @Override
-    protected UserDetailsService userDetailsService(){
-        UserDetails Member = User.builder()
-                .username("Member")
-                .password(passwordEncoder().encode("member"))
-                .roles("Member")
-                .build();
 
-        UserDetails Admin = User.builder()
-                .username("Admi")
-                .password(passwordEncoder().encode("admin"))
-                .roles("Admin")
-                .build();
-
-        return new InMemoryUserDetailsManager(Member, Admin);
+    @Bean
+    PasswordEncoder bcryptPasswordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth)  {
+        auth.authenticationProvider(daoAuthenticationProvider());
+    }
+    @Bean
+    DaoAuthenticationProvider daoAuthenticationProvider(){
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(bcryptPasswordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(userService);
+        return daoAuthenticationProvider;
     }
 }

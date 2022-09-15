@@ -1,5 +1,6 @@
 package com.example.back.model;
 
+import aj.org.objectweb.asm.ConstantDynamic;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ public class User implements Serializable {
     @Id
     @Column(name = "id_user", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id_user;
+    private Long id_user;
 
     @Column(name = "name",length = 255)
     private String name;
@@ -28,8 +29,15 @@ public class User implements Serializable {
     private String last_name;
 
     @Column(name = "user_name",nullable = false,length = 50)
-    private String user_name;
+    private String username;
 
     @Column(name = "phone_number",nullable = false,length = 14)
     private String phone_number;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_role_id")
+    private Roles role;
 }
