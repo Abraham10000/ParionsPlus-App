@@ -1,0 +1,595 @@
+openapi: 3.0.1
+info: 
+  title: Parions+ API
+  description: 'Global description of Parions Plus api'
+  version: 1.0.0
+servers:
+  - url : https://parionsplus.com
+tags:
+  - name: user
+  - name : game
+  - name : bet
+paths:
+  /user:
+    get:
+      tags:
+        - user
+      operationId: get users
+      summary: Get all users of Parions Plus
+      description: Get all users 
+      responses: 
+        200: 
+          description: Here's all of our users
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        400: 
+          description: Bad request
+    post: 
+      tags:
+        - user
+      operationId: add user
+      summary: Add a new user to Parions Plus
+      description: Add a new user
+      requestBody:
+        description: Add a new user to Parions PLus
+        content:
+          application/json:
+            schema:  
+              $ref: '#/components/schemas/CreateUser'
+        required: true
+      responses:
+        201:
+          description: user added
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref : '#/components/schemas/User'
+        400:
+          description: Bad request
+
+  /user/{id}:
+    get:
+      tags:
+        - user
+      operationId: get user by Id
+      summary: Get user by Id
+      description: Get user by Id 
+      parameters :
+      - name : id
+        in : path
+        schema :
+          type : integer
+        required: true
+      responses: 
+        200: 
+          description: Here's the user who have this Id
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        400: 
+          description: Bad request
+    patch:
+      tags:
+        - user
+      summary: Change userinformation
+      description: Change user information
+      parameters :
+      - name : id
+        in : path
+        schema :
+          type : integer
+        required: true
+      requestBody: 
+        description: Change information
+        required: true
+        content :
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+            examples:
+              changeName:
+                summary: change name
+                description: change name 
+                value: 
+                  name: "RANAIVO"
+                  id: 1
+              changeUsername:
+                summary: change  username
+                description: change username
+                value:
+                  username: "rakoutou@34"
+                  id: 2
+      responses:
+        202:
+          description: Information(s) changed
+        400: 
+          description: Bad request
+        404:
+          description: Movie not found
+    delete :
+      tags :
+      - user
+      summary : Delete user
+      description : Delete user by id
+      parameters :
+      - name : id
+        in : path
+        schema :
+          type : integer
+        required: true
+      responses :
+        200 : 
+          description : Delete succesfully
+        400 : 
+          description : Bad request
+        404 : 
+          description : Entity not found
+        
+  /game:
+    get:
+      tags:
+        - game
+      operationId: get games
+      summary: Get all games of Parions Plus
+      description: Get all games
+      responses: 
+        200: 
+          description: Here's all off games here
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+        400: 
+          description: Bad request
+    post: 
+      tags:
+        - game
+      operationId: add game
+      summary: Add a new game to Parions Plus
+      description: Add a new game
+      requestBody:
+        description: Result of game added
+        content:
+          application/json:
+            schema:  
+              $ref: '#/components/schemas/PostGame'
+        required: true
+      responses:
+        201:
+          description: game added
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref : '#/components/schemas/Game'
+        400:
+          description: Bad request
+
+  /gameday:
+    get:
+      tags:
+        - game
+      operationId: get gameday
+      summary: Get gameday 
+      description: Get gameday
+      responses: 
+        200: 
+          description: this is the game 
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+        400: 
+          description: Bad request
+  /game/{id}:
+    patch:
+      tags:
+        - game
+      summary: Change game information
+      description: Change game information
+      parameters :
+      - name : id
+        in : path
+        schema :
+          type : integer
+        required: true
+      requestBody: 
+        description: Change information
+        required: true
+        content :
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Game'
+            examples:
+              changeTeamHome:
+                summary: change team home
+                description: change team home 
+                value: 
+                  name: "Manchester United"
+                  id: 1
+              changeCompetition:
+                summary: change competition
+                description: change competition
+                value:
+                  username: "UEFA"
+                  id: 2
+      responses:
+        202:
+          description: Information(s) changed
+        400: 
+          description: Bad request
+        404:
+          description: Movie not found
+    delete :
+      tags :
+      - game
+      summary : Delete game
+      description : Delete game by id
+      parameters :
+      - name : id
+        in : path
+        schema :
+          type : integer
+        required: true
+      responses :
+        200 : 
+          description : Delete succesfully
+        400 : 
+          description : Bad request
+        404 : 
+          description : Entity not found
+  /game/{category}:
+    get:
+      tags:
+        - game
+      operationId: get games by category
+      summary: Get all games with the same category
+      description: Get games by category
+      parameters :
+      - name : category
+        in : path
+        schema :
+          type : string
+        required: true
+      responses: 
+        200: 
+          description: there are the games who have the same category 
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+        400: 
+          description: Bad request
+  /bet:
+    get:
+      tags:
+        - bet
+      operationId: get bet
+      summary: Get all bet of Parions Plus
+      description: Get all bet
+      responses: 
+        200: 
+          description: Here's all off bet that you make
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bet'
+        400: 
+          description: Bad request
+    post: 
+      tags:
+        - bet
+      operationId: add bet
+      summary: Add a new bet to Parions Plus
+      description: Add a new bet
+      requestBody:
+        description: Result of bet added
+        content:
+          application/json:
+            schema:  
+              $ref: '#/components/schemas/PostBet'
+        required: true
+      responses:
+        201:
+          description: bet added
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref : '#/components/schemas/Bet'
+        400:
+          description: Bad request
+
+  /bet/{id}:
+    get:
+      tags:
+        - bet
+      operationId: get bet by Id
+      summary: Get all bet of Parions Plus
+      description: Get bet by id 
+      parameters :
+      - name : id
+        in : path
+        schema :
+          type : integer           
+        required: true
+      responses: 
+        200: 
+          description: this is the bet who have this Id 
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bet'
+        400: 
+          description: Bad request
+    delete :
+      tags :
+      - bet
+      summary : Delete bet
+      description : Delete bet by id
+      parameters :
+      - name : id
+        in : path
+        schema :
+          type : integer
+        required: true
+      responses :
+        200 : 
+          description : Delete succesfully
+        400 : 
+          description : Bad request
+        404 : 
+          description : Entity not found
+  /bet/{category}:
+    get:
+      tags:
+        - bet
+      operationId: get bet by category
+      summary: Get all bet that you have done on the same category
+      description: Get bet by category 
+      parameters :
+      - name : category
+        in : path
+        schema :
+          type : string
+        required: true
+      responses: 
+        200: 
+          description: here are the bet that you have done on the same category 
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bet'
+        400: 
+          description: Bad request
+  /bet/{status}:
+    get:
+      tags:
+        - bet
+      operationId: get bet by status
+      summary: Get all bet that you lose or win
+      description: Get bet by status 
+      parameters :
+      - name : status
+        in : path
+        schema :
+          type : string
+        required: true
+      responses: 
+        200: 
+          description: here is the bet that you win
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/BetWin'
+        400: 
+          description: Bad request
+ 
+components:
+  schemas:
+    Role:
+      type: object
+      properties:
+        id_role: 
+          type: integer
+          example: 1
+        name: 
+          type: string
+          example: "admin"
+    CreateUser:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Rakoto"
+        last_name:
+          type: string
+          example: "Bozy"
+        user_name : 
+          type : string 
+          example : "rakoutou@01"
+        number: 
+          type : string
+          example: "+261348290618"
+        password:
+          type: string
+          example : "nvxnwbxwiirazqffqn"
+        role:
+          allOf:
+            - $ref: '#/components/schemas/Role'
+    User:
+      allOf:
+        - $ref: '#/components/schemas/CreateUser'
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+    Category:
+        type: object
+        properties:
+          category_name:
+            type: string
+            example: "Football"
+          id_category: 
+            type: integer
+            example: 1
+    Competition:
+        type: object
+        properties:
+          type:
+            type: string
+            example: "Championship"
+          competition_name:
+            type : string
+            example: "Premier League"
+          country:
+            type : string
+            example: "England"
+          category:
+            allOf:
+              - $ref: '#/components/schemas/Category/properties/category_name'
+          id_compet: 
+            type: integer
+            example: 1
+    Team:
+        type: object
+        properties:
+          team_name:
+            type: string
+            example: "Manchester City"
+          country:
+            type: string
+            example: "England"
+          id_team: 
+            type: integer
+            example: 1
+    PostGame:
+      allOf:
+        - $ref: '#/components/schemas/Competition'
+      type: object
+      properties:
+        team_home:
+          allOf: 
+            - $ref: '#/components/schemas/Team/properties/team_name'
+        country:
+          allOf: 
+            - $ref: '#/components/schemas/Team/properties/country'
+        team_Home_rating: 
+          type: integer
+          example: 4
+        team_away: 
+          type: string
+          example: "Leeds United"
+        team_Away_rating: 
+          type: integer
+          example: 1.2
+        broadcast_time: 
+          type : string
+          format : heure
+          example: '16:40'
+        broadcast_day:
+          type: string
+          format: date
+          example: "20-09-22"
+    Game:
+      allOf:
+        - $ref: '#/components/schemas/Competition'
+      type: object
+      properties:
+        team_home:
+          allOf: 
+            - $ref: '#/components/schemas/Team/properties/team_name'
+        country:
+          allOf: 
+            - $ref: '#/components/schemas/Team/properties/country'
+        team_Home_rating: 
+          type: integer
+          example: 4
+        team_away: 
+          type: string
+          example: "Leeds United"
+        team_Away_rating: 
+          type: integer
+          example: 1.2
+        broadcast_time: 
+          type : string
+          format : heure
+          example: '16:40'
+        broadcast_day:
+          type: string
+          format: date
+          example: "20-09-22"
+        id_game:
+          type: integer
+          example: 1
+    PostBet:
+      type: object
+      properties:
+        game_id:
+          allOf:
+            - $ref: '#/components/schemas/Game/properties/id_game'
+        team_staked:
+          allOf: 
+            - $ref: '#/components/schemas/Game/properties/team_home'
+        stake:
+          type: integer
+          example: 2000.000
+        status:
+          type: string
+          example: "win"
+    Bet:
+      type: object
+      properties:
+        game_id:
+          allOf:
+            - $ref: '#/components/schemas/Game/properties/id_game'
+        team_staked:
+          allOf: 
+            - $ref: '#/components/schemas/Game/properties/team_home'
+        stake:
+          type: integer
+          example: 2000.000
+        status:
+          type: string
+          example: "win"
+        id_bet:
+          type: integer
+          example: 1
+    BetWin: 
+      allOf:
+        - $ref: '#/components/schemas/Bet'
+      type: object
+      properties:
+        stake_win:
+          type: integer
+          example: 4000.000
