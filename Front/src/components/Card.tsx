@@ -1,19 +1,34 @@
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import './Card.css';
 
 export function Card() {
+    type Example = {
+        game : Object[];
+    } 
+
+    const URL = "http://localhost:8080/games";
+    const [game,setGame] = useState<any>(null);
+
+    useEffect(() => {
+      const promise =  axios.get(URL);
+      promise.then((response) => {
+        console.log(response);       
+          setGame(response.data);
+        });
+      }, []);
+
+      if(!game) return null;
+
+
     return (
-        <div>
-            
-<div className="section_our_solution">
-  <div className="row">
-    <div className="col-lg-12 col-md-12 col-sm-12">
-      <div className="our_solution_category">
+        <div style={{width : "40%"}}>
         <div className="solution_cards_box">
           <div className="solution_card">
             <div className="hover_color_bubble"></div>
             <div className="solu_title">
-              <h3>Team 1 - Team 2</h3>
-              <p>Competition Description</p>
+              <h3>{game.team_home.team_name} - Team 2</h3>
+              <p>AYAAAAA</p>
             </div>
             <div className="solu_description">
                 <div  className='check-box-container'>
@@ -45,10 +60,5 @@ export function Card() {
           </div>
           </div>
           </div>
-          </div>  
-</div>
-        </div>
-
-        </div>
     )
 }

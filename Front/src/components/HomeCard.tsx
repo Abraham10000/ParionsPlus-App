@@ -1,46 +1,74 @@
-import { Button } from 'react-bootstrap';
-
-import React, { useState } from 'react';
-import { Dropdown, InputGroup, SplitButton} from 'react-bootstrap';
+import './Card.css';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { Link } from 'react-router-dom';
+import { Button, Dropdown, InputGroup, SplitButton} from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 
-export function Navbar() {
-	const [show, setShow] = useState(false);
-	const [form , setForm] = useState("");
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
-	
+export function Homecard() {
+    const [show, setShow] = useState(false);
+const [form , setForm] = useState("");
+const handleClose = () => setShow(false);
+const handleShow = () => setShow(true);
+
+
+const URL = "http://localhost:8080/games";
+const [game,setGame] = useState<any>(null);
+
+
+
+useEffect(() => {
+  const promise =  axios.get(URL)
+  promise.then((response) => {
+    console.log(response);       
+      setGame(response.data);
+    });
+  }, []);
+
+
+  // res.setHeader("Content-Type", "application/json;charset=utf-8"); // Opening this comment will cause problems
     return (
-<div>
-    <nav className="navbar navbar-expand-lg ftco_navbar ftco-navbar-light" id="ftco-navbar"  style={{width : "100%"}}>
-		<div className="container">
-		    <a className="navbar-brand" href="index.html">Parions Plus</a>
-		    <Link to='/'><button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-		        <span className="fa fa-bars"></span> Menu
-		    </button></Link>
-		    <div style={{display : "flex", flexDirection : "row"}} id="ftco-nav">
-				<div>
-				<ul className="navbar-nav ml-auto">
-					<li className="nav-item"><a style={{color : "#FFC107"}} href="#" className="nav-link">Menu</a></li>
-		        	<li className="nav-item"><a href="#" className="nav-link" onClick={handleShow}>Match</a></li>
-              <li className="nav-item"><a href="#" className="nav-link" onClick={handleShow}>Parier</a></li>
-		        </ul>
-				</div>
-				<Button variant="warning" size='sm' style={{width : "100px", height : "50px",marginTop : "5px", marginLeft : "50px"}}
-				onClick={handleShow}>
-                  		S'inscrire
-            	</Button>
-              <Link to='/signin'><Button variant="outline-warning" size='sm' style={{width : "100px", height : "50px",marginTop : "5px", marginLeft : "10px",marginRight : "0px"}}>
-                  		Se Connecter 
-            	</Button></Link>
-		    </div>
-		</div>
-	</nav>
-	<div>
-	<Modal show={show} onHide={handleClose} style={{zIndex : "3000"}}>
+        <div style={{width : "40%"}}>
+        <div className="solution_cards_box">
+          <div className="solution_card">
+            <div className="hover_color_bubble"></div>
+            <div className="solu_title">
+              <h3>Team 1 - Team 2</h3>
+              <p>Competition Description</p>
+            </div>
+            <div className="solu_description">
+                <div  className='check-box-container'>
+                    <div className="form-check" style={{display : "flex", flexDirection : "row"}}>
+                        <label className="form-check-label" htmlFor="flexCheckDefault">
+                            Team 1 Cote
+                        </label>
+                        <input className="form-check-input" type="checkbox" value="" id="cote1"/>
+                    </div>
+                    <div className="form-check" style={{display : "flex", flexDirection : "row", marginLeft : "150px"}}>
+                        <label className="form-check-label" htmlFor="flexCheckDefault">
+                            Null Cote
+                        </label>
+                        <input className="form-check-input" type="checkbox" value="" id="cote2"/>
+                    </div>
+                    <div className="form-check" style={{display : "flex", flexDirection : "row", marginLeft : "120px"}}>
+                        <label className="form-check-label" htmlFor="flexCheckDefault">
+                            Team 2 Cote
+                        </label>
+                        <input className="form-check-input" type="checkbox" value="" id="cote3"/>
+                    </div>
+                </div> <br />
+                <div>
+                    <h6> Time + Date Diffuse at STADIUM</h6>
+                </div>
+              <br />
+              <button type="button" className="button" onClick={handleShow}>Miser</button>
+            </div>
+          </div>
+          </div>
+          <div>
+          <Modal show={show} onHide={handleClose} style={{zIndex : "3000"}}>
               <Modal.Header closeButton>
                 <Modal.Title>Create Account</Modal.Title>
               </Modal.Header>
@@ -99,7 +127,7 @@ export function Navbar() {
                 </Link>
               </Modal.Footer>
             </Modal>
-	</div>
-</div>
+          </div>
+          </div>
     )
 }

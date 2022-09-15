@@ -1,4 +1,5 @@
 import { Card } from "./Card";
+import { Homecard } from "./HomeCard";
 import { Navbar } from "./Navbar";
 
 
@@ -6,13 +7,17 @@ import { Navbar } from "./Navbar";
 export function Body() {
     return (
 <div >
-    <div style={{border : "1px solid black" , width : "1000px" , borderRadius : "0.5%" , marginLeft : "180px"}} >
+    <div className="body-container">
+        <div style={{position : "fixed", width : "100vw", zIndex : "2000"}}>
         <Navbar/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
+        </div> <br /> <br /> <br />
+        <div style={{display : "flex", flexWrap: "wrap", justifyContent : "center" }}>
+        <Homecard/>
+        <Homecard/>
+        <Homecard/>
+        <Homecard/>
+        <Homecard/>
+        </div>
     </div> 
 </div>
     )
